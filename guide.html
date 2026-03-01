@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT to Claude Migration Guide</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Vibrant gradients and colors */
+            --primary: #6E56CF;
+            --primary-accent: #E63B7A;
+            --background: #0D0F12;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #FFFFFF;
+            --text-muted: #A0AAB2;
+            --success: #17C964;
+            --glow: rgba(110, 86, 207, 0.4);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(110, 86, 207, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(230, 59, 122, 0.15), transparent 25%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #A0AAB2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .step-card:hover::before {
+            opacity: 1;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), rgba(110, 86, 207, 0.5));
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px var(--glow);
+        }
+
+        .step-card h2 {
+            font-size: 1.8rem;
+            margin: 0 0 15px 0;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-family: monospace;
+            color: #E2E8F0;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .optional-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+            vertical-align: middle;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--card-border);
+            padding-top: 30px;
+        }
+
+        a {
+            color: #8C78ED;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #FFFFFF;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>ChatGPT to Claude</h1>
+            <p class="subtitle">The definitive workflow to migrate your context, instructions, and history over to
+                Claude using Google's NotebookLM.</p>
+        </header>
+
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <h2>Request everything from ChatGPT</h2>
+            <p>Your first step is to get your data out of OpenAI. Head over to ChatGPT on your web browser.</p>
+            <p>Navigate to <strong>Settings</strong> > <strong>Data Controls</strong> > <strong>Export Data</strong> and
+                request an export. It may take a few minutes for them to compile it.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <h2>Download when it's ready</h2>
+            <p>Check your email. OpenAI will send you a secure link to download a <code>.zip</code> file containing your
+                data. Download it and extract the folder to your computer.</p>
+            <p>Inside, find the file named <code>conversations.json</code>. Move this file into the same directory as
+                the Python scripts provided in this repository.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <h2>Run the monthly splitter</h2>
+            <p>NotebookLM and Claude cannot ingest a massive JSON file directly. We need to split it into readable
+                Markdown texts grouped by month.</p>
+            <p>Open your terminal in the repository folder and run:</p>
+            <div class="code-block">python split_by_month.py</div>
+            <p>This will generate a new folder called <code>monthly_exports/</code>, filled with beautiful Markdown
+                files labeled by month.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">4</div>
+            <h2>Run the chunking script <span class="optional-badge">Optional</span></h2>
+            <p>Google's NotebookLM has a strict upload limit of 500,000 words or 50MB per source. If you are a heavy
+                ChatGPT user, your monthly chunks might still be too large!</p>
+            <p>Run the secondary script to automatically slice large months into smaller parts:</p>
+            <div class="code-block">python split_large_files.py</div>
+            <p>It will safely split files without breaking conversations across files.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">5</div>
+            <h2>Take the files into NotebookLM <span class="optional-badge">Optional</span></h2>
+            <p>Now, head over to <a href="https://notebooklm.google.com" target="_blank">Google NotebookLM</a> and
+                create a new notebook.</p>
+            <p>Drag and drop your generated Markdown files into the Sources panel. It will take a minute or two to index
+                your entire chat history.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">6</div>
+            <h2>Extract useful data <span class="optional-badge">Optional</span></h2>
+            <p>Use NotebookLM to analyze your history and build a robust <strong>Project Knowledge</strong> payload for
+                Claude.</p>
+            <p>Try prompting NotebookLM with the following:</p>
+            <ul>
+                <li><em>"Analyze these conversations and write a comprehensive 'Custom Instructions' guide that captures
+                        my communication style and preferences."</em></li>
+                <li><em>"Summarize my ongoing projects and their current context based on my chat history over the last
+                        3 months."</em></li>
+                <li><em>"What are the most common formatting requirements I ask the AI to adhere to?"</em></li>
+            </ul>
+            <p>Copy NotebookLM's output, and paste it straight into Claude's <strong>Project Knowledge</strong> to hit
+                the ground running!</p>
+        </div>
+
+        <div class="footer">
+            Workflow powered by Python • Designed for seamless LLM transitions
+        </div>
+    </div>
+
+</body>
+
+</html>
