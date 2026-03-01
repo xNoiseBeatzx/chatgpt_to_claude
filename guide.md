@@ -18,19 +18,28 @@ python split_by_month.py
 ```
 This will generate a new folder called `monthly_exports/`, filled with beautiful Markdown files labeled by month.
 
-## 4. Run the chunking script (Optional)
-Google's NotebookLM has a strict upload limit of 500,000 words or 50MB per source. If you are a heavy ChatGPT user, your monthly chunks might still be too large!
-Run the secondary script to automatically slice large months into smaller parts:
+## 4. Extract ChatGPT Projects (Optional)
+If you are a ChatGPT Plus or Team user, you've likely created "Projects" (or Custom GPTs) with multiple conversations inside. The official ChatGPT data export doesn't clearly label these, but it saves them as "gizmos" behind the scenes.
+Run this script to analyze your export, group conversations by their original Projects, and create an index map so you can see which Project is which:
 ```bash
-python split_large_files.py
+python extract_projects.py
+```
+This will create a `chatgpt_projects/` directory containing a Markdown file for each Project, plus a handy `Projects_Index.md` map.
+
+## 5. Run the chunking script (Optional)
+Google's NotebookLM has a strict upload limit of 500,000 words or 50MB per source. If you are a heavy ChatGPT user, your monthly chunks or project chunks might still be too large!
+Run the secondary script to automatically slice large files into smaller parts:
+```bash
+python split_large_files.py monthly_exports
+python split_large_files.py chatgpt_projects
 ```
 It will safely split files without breaking conversations across files.
 
-## 5. Take the files into NotebookLM (Optional)
+## 6. Take the files into NotebookLM (Optional)
 Now, head over to [Google NotebookLM](https://notebooklm.google.com) and create a new notebook.
 Drag and drop your generated Markdown files into the Sources panel. It will take a minute or two to index your entire chat history.
 
-## 6. Extract useful data (Optional)
+## 7. Extract useful data (Optional)
 Use NotebookLM to analyze your history and build a robust **Project Knowledge** payload for Claude.
 Try prompting NotebookLM with the following:
 - *"Analyze these conversations and write a comprehensive 'Custom Instructions' guide that captures my communication style and preferences."*

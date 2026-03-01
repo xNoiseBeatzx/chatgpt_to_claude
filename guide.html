@@ -209,16 +209,30 @@
 
         <div class="step-card">
             <div class="step-number">4</div>
-            <h2>Run the chunking script <span class="optional-badge">Optional</span></h2>
-            <p>Google's NotebookLM has a strict upload limit of 500,000 words or 50MB per source. If you are a heavy
-                ChatGPT user, your monthly chunks might still be too large!</p>
-            <p>Run the secondary script to automatically slice large months into smaller parts:</p>
-            <div class="code-block">python split_large_files.py</div>
-            <p>It will safely split files without breaking conversations across files.</p>
+            <h2>Extract ChatGPT Projects <span class="optional-badge">Optional</span></h2>
+            <p>If you're a Plus or Team user, you likely used ChatGPT's <strong>Projects</strong> feature. ChatGPT hides
+                these under the hood as "Custom GPTs" or "Gizmos" in the data export without their human-readable names.
+            </p>
+            <p>Run the project extraction script to intelligently bundle your conversations back into their original
+                Projects:</p>
+            <div class="code-block">python extract_projects.py</div>
+            <p>This creates a <code>chatgpt_projects/</code> folder, along with a <code>Projects_Index.md</code> map
+                that helps you identify which file belongs to which project based on the conversation titles.</p>
         </div>
 
         <div class="step-card">
             <div class="step-number">5</div>
+            <h2>Run the chunking script <span class="optional-badge">Optional</span></h2>
+            <p>Google's NotebookLM has a strict upload limit of 500,000 words or 50MB per source. If you are a heavy
+                ChatGPT user, your monthly chunks or specific projects might still be too large!</p>
+            <p>Run the secondary script to automatically slice large files into smaller parts:</p>
+            <div class="code-block">python split_large_files.py monthly_exports<br>python split_large_files.py
+                chatgpt_projects</div>
+            <p>It will safely split files without breaking conversations across files.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">6</div>
             <h2>Take the files into NotebookLM <span class="optional-badge">Optional</span></h2>
             <p>Now, head over to <a href="https://notebooklm.google.com" target="_blank">Google NotebookLM</a> and
                 create a new notebook.</p>
@@ -227,7 +241,7 @@
         </div>
 
         <div class="step-card">
-            <div class="step-number">6</div>
+            <div class="step-number">7</div>
             <h2>Extract useful data <span class="optional-badge">Optional</span></h2>
             <p>Use NotebookLM to analyze your history and build a robust <strong>Project Knowledge</strong> payload for
                 Claude.</p>
